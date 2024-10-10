@@ -1,4 +1,4 @@
-# RT_Rendering_Lab1
+# RT_Rendering_Lab2
 ![preview](image.png)
 ## Functionality
 Draw shapes including: `square`, `triangle`, `point`, `vertical line`, `horizontal line`.
