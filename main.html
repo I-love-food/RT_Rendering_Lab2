@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main</title>
+</head>
+<body>
+    <table>
+        <tr>
+            <td><canvas id="c" width="512" height="512"></canvas></td>
+        </tr>
+        <tr>
+            <td>
+                <input type="number" id="width" min="1" placeholder="width" />
+                <input type="number" id="height" min="1" placeholder="height" />
+                <button id="resize">Resize</button>
+            </td>
+        </tr>
+        <tr>
+            <td style="font-size: 15px;">
+                <span style="background-color:yellow;">Next color:&nbsp;</span><span id="next_color">None</span>&nbsp;
+                <span style="background-color:yellow;">Next shape:&nbsp;</span><span id="next_shape">None</span>&nbsp;
+                <span style="background-color: yellow;">Current mode:&nbsp;</span><span id="mode", style="background-color: red;">Create</span>&nbsp;
+            </td>
+        </tr>
+    </table>
+    
+    
+</body>
+    <script src="./transform.js"></script>
+    <script src="./shaders.js"></script>
+    <script src="./main.js"></script>
+</html>

@@ -1,0 +1,18 @@
+Tasks
+In this lab, you will keep all the features from lab 1 but with the following enhancements:
+
+Create a single VBO for each shape - point, line, triangle, and square- at your program's beginning.
+Keep the same keystrokes as lab1, i.e., ‘p’, ‘h’, ‘v’, ‘t’, ‘q’, to draw a point, horizontal line, vertical line, triangle, or square. Still, as you click on the left mouse click, instead of creating new VBOs as you did for Lab1, you draw the shape using the already created VBO but translate it to the current position.
+Allow the user to continue to hold the mouse button, move the cursor to rotate the shape you just drew, and stop rotating as you release the left mouse button.  
+Press ‘S’ to enlarge the current shape and ‘s’ to shrink the current shape. 
+Press ‘W’ to indicate your want global transformation (transform all shapes). Use the left mouse button to rotate and ‘S’ and ‘s’ to scald up and down. Press ‘w' to turn off the global transformation.
+Keep the rest of the keys, i.e, ‘r’, ‘g’, ‘b’ for color
+Note:
+
+High-level graphics libraries (including but not limited to Three.js and Unity WebGL) are not allowed.  However, you may use third-party WebGL matrix libraries like glMatrix, glm-js, and cuon-matrix
+You may use HTML buttons or other interactive elements besides keystrokes; please declare them in your readme file.
+Bonus point
+Do the following and receive up to one bonus point:
+
+(0.5 pt): Click on a shape previously defined and use the mouse to rotate, ‘s/S’ to scale, and ‘r/g/b’ to recolor.
+(0.5 pt): Write your own matrix arithmetic instead of using a third-party library like glMatrix or glm-js
