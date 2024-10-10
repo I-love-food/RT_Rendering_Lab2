@@ -1,9 +1,9 @@
-function matrix_mul3(ma, mb){ // ,ma, mb is row major
+function matrix_mul3(ma, mb){ // ma, mb is row major
   mc = new Array(9).fill(0);
   for(i = 0; i < 3; i ++){
     for(j = 0; j < 3; j ++){
       for(k = 0; k < 3; k ++){
-        idx_c = i * 3 + j; // col major
+        idx_c = i * 3 + j; 
         idx_a = i * 3 + k;
         idx_b = k * 3 + j;
         mc[idx_c] += ma[idx_a] * mb[idx_b];
@@ -13,11 +13,11 @@ function matrix_mul3(ma, mb){ // ,ma, mb is row major
   return mc;
 }
 
-function matrix_vector_mul3(ma, mb){ // ,ma, mb is row major
+function matrix_vector_mul3(ma, mb){ // ma, mb is row major
   mc = new Array(3).fill(0);
   for(i = 0; i < 3; i ++){
     for(j = 0; j < 3; j ++){
-        idx_c = i; // col major
+        idx_c = i; 
         idx_a = i * 3 + j;
         idx_b = j;
         mc[idx_c] += ma[idx_a] * mb[idx_b];

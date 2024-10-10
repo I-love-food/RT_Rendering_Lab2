@@ -40,7 +40,7 @@ gl.enableVertexAttribArray(position_loc);
  * 
  */
 activate_info = [] // type, count
-shapes = ['t', 'q', 'p', 'h', 'v'] // line only one basic type is enough, point is just a square applied with a initial scale param
+shapes = ['t', 'q', 'p', 'h', 'v']
 datas = [
     [ // triangle
         [-0.1, -0.07],
@@ -95,12 +95,6 @@ for(let i = 0; i < shapes.length; i ++){
 }
 
 var ortho_projection = new Projection2(canvas.width, canvas.height);
-// shape_table["t"][2].push([new Transform2([0, 0], [0.5, 0.5]), [0, 1, 0], 0.], [new Transform2([0.5, 0.5], [1, 1], 10), [0, 1, 0], 0.])
-// shape_table["p"][2].push([new Transform2([-0.5, -0.5], [2, 2]), [1, 0, 0], 0.])
-// shape_table["h"][2].push([new Transform2([-0.5, 0.5], [1, 1]), [1, 1, 0], 0.], [new Transform2([-0.5, 0.5], [1, 1], 90), [1, 1, 0], 0.])
-// shape_table["v"][2].push([new Transform2([-0.5, 0.5], [1, 1], 30), [1, 1, 0], 0.])
-// shape_table["q"][2].push([new Transform2([0.5, -0.5], [1.5, 1.5], 45), [1, 1, 0], 0.])
-
 
 gl.useProgram(program); 
 gl.clearColor(0, 0, 0, 1);
