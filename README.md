@@ -1,5 +1,5 @@
 # RT_Rendering_Lab2
-![preview](image.png)
+![preview](image-1.png)
 ## How to launch
 Open `main.html` with your browser.
 
