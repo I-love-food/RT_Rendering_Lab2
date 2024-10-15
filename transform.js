@@ -69,6 +69,10 @@ class Transform2 {
     this.d = d;
     this.mat = null // row major
     this.inv_mat = null // row major
+
+    this.gt = [0, 0];
+    this.gs = [1, 1];
+    this.gd = 0;
   }
 
   translate(tx, ty){
@@ -81,7 +85,7 @@ class Transform2 {
   rotate(d){
     this.d += d;
     this.mat = null
-    this.inv_mat = null  
+    this.inv_mat = null 
   }
 
   scale(sx, sy){
@@ -91,9 +95,29 @@ class Transform2 {
     this.inv_mat = null 
   }
 
+  translate_g(tx, ty){
+    this.gt[0] += tx
+    this.gt[1] += ty
+    this.mat = null
+    this.inv_mat = null
+  }
+
+  rotate_g(d){
+    this.gd += d;
+    this.mat = null
+    this.inv_mat = null
+  }
+
+  scale_g(sx, sy){
+    this.gs[0] *= sx;
+    this.gs[1] *= sy;
+    this.mat = null
+    this.inv_mat = null
+  }
+
   calculate(){
     let theta = to_radian(this.d)
-    this.mat = matrix_mul3(
+    let local_mat = matrix_mul3(
       [1, 0, this.t[0], 0, 1, this.t[1], 0, 0, 1],
         matrix_mul3(
           [this.s[0], 0, 0, 0, this.s[1], 0, 0, 0, 1],
@@ -104,6 +128,19 @@ class Transform2 {
           ]
         )
     )
+    theta = to_radian(this.gd)
+    let global_mat = matrix_mul3(
+      [1, 0, this.gt[0], 0, 1, this.gt[1], 0, 0, 1],
+        matrix_mul3(
+          [this.gs[0], 0, 0, 0, this.gs[1], 0, 0, 0, 1],
+          [
+            Math.cos(theta), -Math.sin(theta), 0,
+            Math.sin(theta), Math.cos(theta), 0,
+            0, 0, 1
+          ]
+        )
+    )
+    this.mat = matrix_mul3(global_mat, local_mat);
     this.inv_mat = inverse(this.mat)
   }
 
@@ -127,7 +164,11 @@ class Transform2 {
     let t = [this.t[0], this.t[1]]
     let s = [this.s[0], this.s[1]]
     let d = this.d
-    return new Transform2(t, s, d);
+    let res = new Transform2(t, s, d);
+    res.gt = this.gt
+    res.gd = this.gd
+    res.gs = this.gs
+    return res
   }
 }
 

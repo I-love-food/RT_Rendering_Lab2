@@ -4,6 +4,9 @@ next_shape = null;
 max_depth = 100000.0;
 depth = max_depth
 step = 1.0
+
+global_transformation = false;
+
 color_dict = {
     'r': ["red", [1, 0, 0]],
     'g': ["green", [0, 1, 0]],
@@ -145,6 +148,7 @@ const resize_button = document.getElementById('resize');
 const next_color_text = document.getElementById('next_color');
 const next_shape_text = document.getElementById('next_shape');
 const mode_text = document.getElementById('mode');
+const trans_text = document.getElementById('trans');
 
 function add_info(info){
     let flag = false;
@@ -232,10 +236,19 @@ canvas.addEventListener('mousemove', (e) => {
     const rect = canvas.getBoundingClientRect();
     const y = e.clientY - rect.top;
     let sign = -y + start_y;
-    for(let i = 0; i < activate_info.length; i ++){
-        let info = activate_info[i];
-        let active_inst = shape_table[info[0]][2][info[1]]
-        active_inst[0].rotate(sign);
+
+    if(global_transformation){
+        shapes.forEach(shape => {
+            shape_table[shape][2].forEach(inst => {
+                inst[0].rotate_g(sign);
+            });
+        });
+    }else{
+        for(let i = 0; i < activate_info.length; i ++){
+            let info = activate_info[i];
+            let active_inst = shape_table[info[0]][2][info[1]]
+            active_inst[0].rotate(sign);
+        }
     }
     start_y = y;
 });
@@ -256,6 +269,7 @@ canvas.addEventListener('mouseup', (event) => {
         shape_table[next_shape][2].push([new Transform2([world_pos[0], world_pos[1]]), color_dict[next_color][1], depth / max_depth]);
         return;
     }
+    if(global_transformation) return;
     hit_record = find_intersection(world_pos);
     if(hit_record != null){
         add_info(hit_record);
@@ -273,17 +287,33 @@ document.addEventListener('keydown', (event) => {
     }
     if(event.key === 'S'){
         console.log("scale up")
-        activate_info.forEach(info => {
-            active_inst = shape_table[info[0]][2][info[1]];
-            active_inst[0].scale(1.1, 1.1);
-        });
+        if(global_transformation){
+            shapes.forEach(shape => {
+                shape_table[shape][2].forEach(inst => {
+                    inst[0].scale_g(1.1, 1.1);
+                });
+            });
+        }else{
+            activate_info.forEach(info => {
+                active_inst = shape_table[info[0]][2][info[1]];
+                active_inst[0].scale(1.1, 1.1);
+            });
+        }
     }
     if(event.key === 's'){
         console.log('scale down')
-        activate_info.forEach(info => {
-            active_inst = shape_table[info[0]][2][info[1]];
-            active_inst[0].scale(1 / 1.1, 1 / 1.1);
-        });
+        if(global_transformation){
+            shapes.forEach(shape => {
+                shape_table[shape][2].forEach(inst => {
+                    inst[0].scale_g(1 / 1.1, 1 / 1.1);
+                });
+            });
+        }else{
+            activate_info.forEach(info => {
+                active_inst = shape_table[info[0]][2][info[1]];
+                active_inst[0].scale(1 / 1.1, 1 / 1.1);
+            });
+        }
     }
     if(shapes.includes(event.key)){
         next_shape = event.key;
@@ -302,6 +332,8 @@ document.addEventListener('keydown', (event) => {
     }
     if(event.key === 'C'){ // toggle create mode
         is_selection ^= true;
+        global_transformation = false
+        trans_text.innerHTML = "Local"
         if(!is_selection){
             activate_info = []
             mode_text.innerHTML = "Create";
@@ -311,16 +343,13 @@ document.addEventListener('keydown', (event) => {
     }
     if(event.key === 'W'){
         if(!is_selection) return;
-        shapes.forEach(shape => {
-            insts = shape_table[shape][2]
-            for(let i = 0; i < insts.length; i ++){
-                add_info([shape, i]);
-            }
-        });
+        global_transformation = true;
+        trans_text.innerHTML = "Global"
     }
     if(event.key === 'w'){
         if(!is_selection) return;
-        activate_info = [];
+        global_transformation = false;
+        trans_text.innerHTML = "Local"
     }
     if(event.key === 'c'){
         shapes.forEach(shape => {
